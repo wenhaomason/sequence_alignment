@@ -146,15 +146,19 @@ int main(int argc, char* argv[]) {
     int k = indices2.size();
     
     inputFile.close();
-    
-    // Generate strings
-    std::string string1 = generateString(baseString1, indices1);
-    std::string string2 = generateString(baseString2, indices2);
-    
-    // Verify lengths
+
     int expectedLen1 = baseString1.length() * (1 << j);
     int expectedLen2 = baseString2.length() * (1 << k);
+
+    std::string string1 = baseString1;
+    std::string string2 = baseString2;
     
+    // Generate strings
+    if (!indices1.empty())
+        string1 = generateString(baseString1, indices1);
+    if (!indices2.empty())
+        string2 = generateString(baseString2, indices2);
+
     if (string1.length() != expectedLen1 || string2.length() != expectedLen2) {
         std::cerr << "Error: Generated strings have incorrect lengths." << std::endl;
         return 1;
